@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RecruiterAI — Voice-First AI Recruiter Platform</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <!-- ── NAVIGATION BAR ── -->
+    <nav class="nav">
+        <div class="nav-brand" onclick="showScreen('landing')">
+            <div class="logo-box"><i class="ti ti-robot"></i></div>
+            <div>
+                <div class="brand-name">RecruiterAI</div>
+                <div class="brand-sub">Test For UR Future !</div>
+            </div>
+        </div>
+
+        <div class="nav-links">
+            <span class="nav-link active" id="link-landing" onclick="showScreen('landing')">Home</span>
+            <span class="nav-link" id="link-candidate" onclick="showScreen('candidate')">Candidate Space</span>
+            <span class="nav-link" id="link-recruiter" onclick="showScreen('recruiter')">Recruiter Portal</span>
+            <span class="nav-link" id="link-developer" onclick="showScreen('developer')">About Developer</span>
+        </div>
+
+        <div class="nav-actions">
+            <button class="theme-toggle-btn" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+                <i class="ti ti-sun" id="theme-icon"></i>
+            </button>
+            <button onclick="openSettings()" title="Claude API Configuration">
+                <i class="ti ti-settings"></i>API Config
+            </button>
+            <button class="btn-primary" onclick="showScreen('register')">
+                <i class="ti ti-microphone"></i>Start Interview
+            </button>
+        </div>
+    </nav>
+
+    <!-- ── SCREEN: LANDING PAGE ── -->
+    <div id="screen-landing" class="screen active">
+        <div class="hero-section">
+            <div class="hero-badge">
+                <i class="ti ti-sparkles"></i> Voice-First · 6 rounds · Animated Recruiter Avatar
+            </div>
+            <h1>Speak to Your Next Job with <span>RecruiterAI</span></h1>
+            <p>A voice-first interview experience with recruiter avatar Alex. High-fidelity continuous listening,
+                language-specific tech assessments, and comprehensive scoring dashboards.</p>
+
+            <div class="hero-btns">
+                <button class="btn-primary" onclick="showScreen('register')">
+                    <i class="ti ti-player-play"></i>Start Voice Interview
+                </button>
+                <button onclick="showScreen('candidate')">
+                    <i class="ti ti-chart-pie"></i>Candidate Dashboard
+                </button>
+            </div>
+
+            <!-- General Statistics -->
+            <div class="stats-row">
+                <div class="stat-card glass-card">
+                    <div class="stat-icon" style="background: var(--purple-light)"><i class="ti ti-microphone"
+                            style="color: var(--purple)"></i></div>
+                    <div>
+                        <div class="stat-val">14,295</div>
+                        <div class="stat-lbl">Interviews Conducted</div>
+                    </div>
+                </div>
+                <div class="stat-card glass-card">
+                    <div class="stat-icon" style="background: var(--green-light)"><i class="ti ti-user-check"
+                            style="color: var(--green)"></i></div>
+                    <div>
+                        <div class="stat-val">4,812</div>
+                        <div class="stat-lbl">Candidates Placed</div>
+                    </div>
+                </div>
+                <div class="stat-card glass-card">
+                    <div class="stat-icon" style="background: var(--blue-light)"><i class="ti ti-chart-bar"
+                            style="color: var(--blue)"></i></div>
+                    <div>
+                        <div class="stat-val">8.4/10</div>
+                        <div class="stat-lbl">Average Score</div>
+                    </div>
+                </div>
+                <div class="stat-card glass-card">
+                    <div class="stat-icon" style="background: var(--amber-light)"><i class="ti ti-language"
+                            style="color: var(--amber)"></i></div>
+                    <div>
+                        <div class="stat-val">10 Stacks</div>
+                        <div class="stat-lbl">Tech Stacks Tested</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Programming Language grid -->
+        <div style="margin-top: 4rem;">
+            <div class="section-title-wrap">
+                <div class="hero-badge" style="margin-bottom: 8px;">Technical rounds</div>
+                <h2 class="section-title">Select Your Technical Focus</h2>
+                <p class="section-sub">Adaptive questions tailored specifically to your level, framework stack, and code
+                    rules.</p>
+            </div>
+
+            <div class="lang-grid" id="landing-lang-grid">
+                <!-- Rendered dynamically -->
+            </div>
+        </div>
+
+        <!-- Testimonials Slider -->
+        <div class="testimonial-section">
+            <div class="section-title-wrap" style="margin-bottom: 2rem;">
+                <div class="hero-badge" style="margin-bottom: 8px;">Testimonials</div>
+                <h2 class="section-title" style="font-size: 24px;">Success Stories</h2>
+            </div>
+            <div class="testi-card glass-card">
+                <div class="testi-quote">“</div>
+                <p class="testi-text" id="testi-text">The AI recruiter was incredibly realistic. It asked follow-up
+                    questions just like a real interviewer. Helped me crack my dream job!</p>
+                <div class="testi-profile">
+                    <div class="testi-avatar" id="testi-avatar">P</div>
+                    <div class="testi-info">
+                        <div class="testi-name" id="testi-name">Priya Sharma</div>
+                        <div class="testi-role" id="testi-role">SDE at Amazon</div>
+                    </div>
+                    <div class="testi-score" id="testi-score">9.2/10</div>
+                </div>
+            </div>
+            <div class="testi-dots" id="testi-dots">
+                <!-- Rendered dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ── SCREEN: REGISTER ── -->
+    <div id="screen-register" class="screen">
+        <div class="register-container glass-card">
+            <div class="register-header">
+                <div class="logo-box" style="width:44px; height:44px;"><i class="ti ti-user-plus"></i></div>
+                <div>
+                    <h2 style="font-size: 20px; font-weight: 700;">Setup Your Profile & Interview</h2>
+                    <p style="font-size: 12px; color: var(--text-secondary);">RecruiterAI conducts mock sessions in
+                        English using standard text or microphone voice input.</p>
+                </div>
+            </div>
+
+            <div class="form-grid-layout">
+                <div class="form-field-full">
+                    <label class="field-label">Full Name *</label>
+                    <input id="reg-name" type="text" placeholder="Jeshwanth Dharamsoth" style="width: 100%;">
+                </div>
+                <div>
+                    <label class="field-label">Email Address *</label>
+                    <input id="reg-email" type="email" placeholder="name@gmail.com" style="width: 100%;">
+                </div>
+                <div>
+                    <label class="field-label">Phone Number</label>
+                    <input id="reg-phone" type="text" placeholder="+91 9876543210" style="width: 100%;">
+                </div>
+                <div>
+                    <label class="field-label">Experience Level *</label>
+                    <select id="reg-exp" style="width: 100%;">
+                        <option value="">Select Level</option>
+                        <option>Fresher (0-1 yr)</option>
+                        <option>Junior (1-3 yrs)</option>
+                        <option>Mid-Level (3-5 yrs)</option>
+                        <option>Senior (5-8 yrs)</option>
+                        <option>Lead (8+ yrs)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="field-label">Desired Role *</label>
+                    <select id="reg-role" style="width: 100%;">
+                        <option value="">Select Role</option>
+                        <option></option>Data Scientist
+                        <option>Software Engineer</option>
+                        <option>Frontend Developer</option>
+                        <option>Backend Developer</option>
+                        <option>Full Stack Developer</option>
+                        <option>ML Engineer</option>
+                        <option>DevOps Engineer</option>
+                    </select>
+                </div>
+                <div class="form-field-full">
+                    <label class="field-label">Key Skills</label>
+                    <input id="reg-skills" type="text" placeholder="React, Node.js, Java, Python, SQL, Git..."
+                        style="width: 100%;">
+                </div>
+                <div class="form-field-full">
+                    <label class="field-label">Education / University</label>
+                    <input id="reg-edu" type="text" placeholder="B.Tech Data Science, CMR Engineering College 2026"
+                        style="width: 100%;">
+                </div>
+
+                <div class="form-field-full" style="margin-top: 10px;">
+                    <label class="field-label"><i class="ti ti-code"></i> Technical Language Target *</label>
+                    <div class="lang-grid" id="register-lang-grid" style="margin-bottom: 0;">
+                        <!-- Dynamic selection -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="reg-info-alert">
+                <i class="ti ti-info-circle"></i>
+                <span>AI Recruiter Alex will evaluate you on <strong>Communication</strong>, <strong>Technical
+                        depth</strong>, and <strong>Problem-Solving</strong> using selected settings.</span>
+            </div>
+
+            <button id="btn-submit-registration" class="btn-primary" onclick="submitRegistration()"
+                style="width: 100%; padding: 12px; font-size: 15px;" disabled>
+                Start Interview Session <i class="ti ti-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- ── SCREEN: INTERVIEW ROOM ── -->
+    <div id="screen-interview" class="screen">
+        <div class="interview-split-layout">
+
+            <!-- Left Sidebar: Recruiter Info & Controls -->
+            <div class="avatar-panel glass-card">
+
+                <!-- Recruiter Box -->
+                <div class="avatar-svg-container" id="avatar-container">
+                    <svg id="recruiter-avatar" viewBox="0 0 100 100" class="avatar-svg">
+                        <circle cx="50" cy="50" r="45" fill="none" stroke="var(--purple)" stroke-width="1"
+                            stroke-dasharray="3 3"
+                            style="animation: rotate-gla 15s linear infinite; transform-origin: center;" />
+                        <!-- Hair back -->
+                        <path d="M28 50 C28 25, 72 25, 72 50 C72 65, 72 70, 72 75 C70 80, 30 80, 28 75 Z"
+                            fill="#3A2A1A" />
+                        <!-- Suit/Clothes -->
+                        <path d="M30 90 L70 90 L66 72 C66 72, 60 70, 50 70 C40 70, 34 72, 34 72 Z" fill="#1E293B" />
+                        <!-- Neck -->
+                        <path d="M45 70 L55 70 L52 82 L48 82 Z" fill="#FCE2C6" />
+                        <!-- Shirt lapel -->
+                        <path d="M36 72 L46 88 L39 90 Z" fill="#0F172A" />
+                        <path d="M64 72 L54 88 L61 90 Z" fill="#0F172A" />
+                        <path d="M46 76 L50 85 L54 76 Z" fill="#FFFFFF" />
+                        <!-- Face -->
+                        <circle cx="50" cy="50" r="19" fill="#FCE2C6" />
+                        <!-- Hair front / bangs -->
+                        <path d="M30 46 C32 28, 68 28, 70 46 C60 26, 40 26, 30 46 Z" fill="#4B3621" />
+                        <path d="M30 46 C30 46, 33 34, 43 38 Z" fill="#4B3621" />
+                        <path d="M70 46 C70 46, 67 34, 57 38 Z" fill="#4B3621" />
+                        <!-- Glasses -->
+                        <rect x="36" y="44" width="11" height="7" rx="2" fill="none" stroke="#2D3748"
+                            stroke-width="1.2" />
+                        <rect x="53" y="44" width="11" height="7" rx="2" fill="none" stroke="#2D3748"
+                            stroke-width="1.2" />
+                        <line x1="47" y1="48" x2="53" y2="48" stroke="#2D3748" stroke-width="1" />
+                        <!-- Eyes -->
+                        <g>
+                            <ellipse cx="41.5" cy="47.5" rx="1.5" ry="1.5" fill="#111" class="left-eye"
+                                style="transform-origin: 41.5px 47.5px; animation: blink 4.5s infinite;" />
+                            <ellipse cx="58.5" cy="47.5" rx="1.5" ry="1.5" fill="#111" class="right-eye"
+                                style="transform-origin: 58.5px 47.5px; animation: blink 4.5s infinite;" />
+                        </g>
+                        <!-- Blush -->
+                        <circle cx="35" cy="53" r="1.5" fill="#FFA3A5" opacity="0.5" />
+                        <circle cx="65" cy="53" r="1.5" fill="#FFA3A5" opacity="0.5" />
+                        <!-- Mouth -->
+                        <path id="mouth-path" d="M 46 58 Q 50 61 54 58" stroke="#E07A5F" stroke-width="1.5" fill="none"
+                            stroke-linecap="round" />
+                    </svg>
+                </div>
+
+                <div class="avatar-status-badge status-ready" id="interview-status-badge">
+                    <span
+                        style="display:inline-block; width:8px; height:8px; border-radius:50%; background:currentColor;"></span>
+                    <span id="interview-status-text">Ready</span>
+                </div>
+
+                <!-- Voice Visualizer Wave -->
+                <div class="canvas-wave-box">
+                    <canvas id="canvas-wave" class="canvas-wave"></canvas>
+                </div>
+
+                <!-- System Controls & Mode -->
+                <div class="voice-control-box">
+                    <div style="font-weight:600; display:flex; justify-content:space-between; margin-bottom: 4px;">
+                        <span>Voice-First Interview</span>
+                        <span style="color:var(--purple);" id="voice-mode-status">ACTIVE</span>
+                    </div>
+                    <div class="slider-row">
+                        <span style="color:var(--text-secondary)">Volume:</span>
+                        <input type="range" id="voice-volume" min="0" max="1" step="0.1" value="1"
+                            onchange="updateAudioConfig()">
+                    </div>
+                    <div class="slider-row">
+                        <span style="color:var(--text-secondary)">Rate/Speed:</span>
+                        <input type="range" id="voice-rate" min="0.5" max="1.5" step="0.05" value="0.9"
+                            onchange="updateAudioConfig()">
+                    </div>
+
+                    <button style="margin-top: 10px; width: 100%;" onclick="toggleVoiceMode()">
+                        <i class="ti ti-keyboard"></i> Switch to Text-First Mode
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Panel: Conversation bubble logs -->
+            <div class="chat-panel glass-card">
+                <div class="round-meta-header">
+                    <div>
+                        <h3 style="font-size:15px; font-weight:700;" id="round-title-display">Round 1: Introduction</h3>
+                        <p style="font-size:11px; color:var(--text-secondary);" id="round-desc-display">Evaluating
+                            communication & professional background.</p>
+                    </div>
+                    <div class="round-dots-row" id="round-indicators">
+                        <!-- 6 rounds indicators dynamic -->
+                    </div>
+                </div>
+
+                <!-- Progress tracker -->
+                <div class="round-progress-bar">
+                    <div class="round-progress-fill" id="interview-progress-fill"></div>
+                </div>
+
+                <!-- Dialog Stream -->
+                <div class="message-stream" id="message-stream">
+                    <!-- Dynamically populated bubbles -->
+                </div>
+
+                <!-- Text/Mic Input Container -->
+                <div class="chat-input-row">
+                    <button class="mic-record-btn" id="btn-mic-toggle" onclick="toggleMicrophone()"
+                        title="Speech-to-Text Input">
+                        <i class="ti ti-microphone" id="mic-btn-icon" style="font-size:18px;"></i>
+                    </button>
+
+                    <div style="flex: 1; display: flex; flex-direction: column; gap: 6px;">
+                        <textarea class="chat-textarea" id="interview-input" rows="1"
+                            placeholder="Describe your experience or speak through microphone..."
+                            onkeydown="handleInputKey(event)"></textarea>
+                        
+                        <!-- Real-time Transcription & Confidence Display -->
+                        <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-secondary); padding: 0 8px;">
+                            <div style="flex: 1; display: flex; align-items: center; gap: 4px;">
+                                <i class="ti ti-text-recognition" style="color: var(--blue);"></i>
+                                <span id="transcription-display" style="flex: 1; font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Ready...</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 4px; background: rgba(139, 92, 246, 0.1); padding: 4px 8px; border-radius: 6px;">
+                                <i class="ti ti-broadcast" style="color: var(--purple); font-size: 11px;"></i>
+                                <span id="confidence-indicator" style="font-weight: 600; color: var(--purple); min-width: 30px;">--</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="send-msg-btn" onclick="submitMessage()" title="Submit Answer">
+                        <i class="ti ti-send" style="font-size:16px;"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── SCREEN: DONE SCREEN ── -->
+    <div id="screen-done" class="screen">
+        <div class="register-container glass-card" style="text-align: center; padding: 3rem;">
+            <div
+                style="width: 70px; height: 70px; border-radius: 50%; background: var(--green-light); border: 2px solid var(--green); color: var(--green); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                <i class="ti ti-check" style="font-size: 36px;"></i>
+            </div>
+            <h2 style="font-size: 26px; font-weight: 700; margin-bottom: 0.5rem;">Mock Interview Completed!</h2>
+            <p style="color: var(--text-secondary); font-size: 15px; max-width: 450px; margin: 0 auto 2rem;"
+                id="done-screen-msg">Great job. Your scores across 8 metrics, technical performance graphs, and
+                recruiter feedback notes have been finalized.</p>
+
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 1.5rem;">
+                <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                    <button class="btn-primary" onclick="showScreen('candidate')" style="padding: 12px 28px;">
+                        <i class="ti ti-dashboard"></i> View Dashboard
+                    </button>
+                    <button onclick="showScreen('recruiter')" style="padding: 12px 24px;">
+                        <i class="ti ti-briefcase"></i> Recruiter Portal
+                    </button>
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                    <button onclick="downloadTranscript()" style="padding: 10px 16px; font-size: 13px; background: var(--purple-light); color: var(--purple); border: 1px solid var(--purple);">
+                        <i class="ti ti-text"></i> Download Transcript
+                    </button>
+                    <button onclick="downloadAudioRecording()" style="padding: 10px 16px; font-size: 13px; background: var(--green-light); color: var(--green); border: 1px solid var(--green);">
+                        <i class="ti ti-microphone"></i> Download Recording
+                    </button>
+                    <button onclick="exportSessionData()" style="padding: 10px 16px; font-size: 13px; background: var(--blue-light); color: var(--blue); border: 1px solid var(--blue);">
+                        <i class="ti ti-json"></i> Export Data
+                    </button>
+                    <button onclick="saveSessionToHistory()" style="padding: 10px 16px; font-size: 13px; background: var(--amber-light); color: var(--amber); border: 1px solid var(--amber);">
+                        <i class="ti ti-history"></i> Save to History
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── SCREEN: CANDIDATE DASHBOARD ── -->
+    <div id="screen-candidate" class="screen">
+        <div class="dashboard-grid">
+
+            <!-- Side Tab Controls -->
+            <div class="dash-sidebar">
+                <button class="sidebar-btn active" id="btn-tab-cand-overview" onclick="switchCandidateTab('overview')">
+                    <i class="ti ti-dashboard"></i> Overview Summary
+                </button>
+                <button class="sidebar-btn" id="btn-tab-cand-analytics" onclick="switchCandidateTab('analytics')">
+                    <i class="ti ti-chart-dots"></i> Advanced Analytics
+                </button>
+                <button class="sidebar-btn" id="btn-tab-cand-roadmap" onclick="switchCandidateTab('roadmap')">
+                    <i class="ti ti-road"></i> Learning Roadmap
+                </button>
+                <button class="sidebar-btn" id="btn-tab-cand-history" onclick="switchCandidateTab('history')">
+                    <i class="ti ti-history"></i> Practice History & Badges
+                </button>
+                <button onclick="restartInterviewSession()"
+                    style="margin-top: 2rem; border-color: var(--purple); color: var(--purple);">
+                    <i class="ti ti-refresh"></i> Run New Session
+                </button>
+            </div>
+
+            <!-- Main Dash Panel -->
+            <div class="dash-content-area glass-card">
+
+                <!-- Tab 1: Overview Summary -->
+                <div id="cand-tab-overview">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <div>
+                            <h2 id="cand-header-name" style="font-size: 22px; font-weight:700;">Candidate Report Summary
+                            </h2>
+                            <p style="font-size: 13px; color: var(--text-secondary);" id="cand-header-meta">Data Science
+                                Candidate · B.Tech 3rd Year</p>
+                        </div>
+                        <button onclick="exportReportPDF()"><i class="ti ti-file-text"></i> Export PDF Report</button>
+                    </div>
+
+                    <div class="summary-metrics-grid">
+                        <div class="metric-gauge-card glass-card">
+                            <span class="field-label">Interview Score</span>
+                            <div class="radial-gauge-container">
+                                <svg class="gauge-circle" viewBox="0 0 100 100">
+                                    <circle class="gauge-circle-bg" cx="50" cy="50" r="45"></circle>
+                                    <circle class="gauge-circle-fill" id="cand-score-gauge" cx="50" cy="50" r="45">
+                                    </circle>
+                                </svg>
+                                <div class="gauge-label" id="cand-score-value">0.0</div>
+                            </div>
+                            <span style="font-size: 12px; color: var(--text-secondary);">out of 10</span>
+                        </div>
+
+                        <div class="metric-gauge-card glass-card">
+                            <span class="field-label">Interview Readiness</span>
+                            <div class="radial-gauge-container">
+                                <svg class="gauge-circle" viewBox="0 0 100 100">
+                                    <circle class="gauge-circle-bg" cx="50" cy="50" r="45"></circle>
+                                    <circle class="gauge-circle-fill" id="cand-readiness-gauge" cx="50" cy="50" r="45"
+                                        style="stroke: var(--blue);"></circle>
+                                </svg>
+                                <div class="gauge-label" id="cand-readiness-value">0%</div>
+                            </div>
+                            <span id="cand-readiness-badge"
+                                style="font-size: 12px; font-weight: 600; color: var(--blue);">Intermediate</span>
+                        </div>
+
+                        <div class="metric-gauge-card glass-card">
+                            <span class="field-label">Hiring Probability</span>
+                            <div class="radial-gauge-container">
+                                <svg class="gauge-circle" viewBox="0 0 100 100">
+                                    <circle class="gauge-circle-bg" cx="50" cy="50" r="45"></circle>
+                                    <circle class="gauge-circle-fill" id="cand-prob-gauge" cx="50" cy="50" r="45"
+                                        style="stroke: var(--green);"></circle>
+                                </svg>
+                                <div class="gauge-label" id="cand-prob-value">0%</div>
+                            </div>
+                            <span id="cand-prob-badge"
+                                style="font-size: 12px; font-weight: 600; color: var(--green);">Highly Likely</span>
+                        </div>
+                    </div>
+
+                    <!-- Strength and Weakness Section -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 1.5rem;">
+                        <div class="glass-card"
+                            style="padding: 1.5rem; background: var(--green-light); border-color: var(--green);">
+                            <h3
+                                style="color: var(--green); font-size: 15px; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+                                <i class="ti ti-thumb-up"></i> AI Highlighted Strengths
+                            </h3>
+                            <ul style="font-size: 13px; padding-left: 20px; line-height: 1.7; color: var(--text-primary);"
+                                id="cand-strengths-list">
+                                <!-- Dynamic strengths -->
+                            </ul>
+                        </div>
+
+                        <div class="glass-card"
+                            style="padding: 1.5rem; background: var(--amber-light); border-color: var(--amber);">
+                            <h3
+                                style="color: var(--amber); font-size: 15px; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
+                                <i class="ti ti-target"></i> AI Identified Improvement Areas
+                            </h3>
+                            <ul style="font-size: 13px; padding-left: 20px; line-height: 1.7; color: var(--text-primary);"
+                                id="cand-weakness-list">
+                                <!-- Dynamic weaknesses -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 2: Advanced Analytics Charts -->
+                <div id="cand-tab-analytics" style="display: none;">
+                    <h2 style="font-size: 18px; margin-bottom: 1rem;">Advanced Analytics Visualizations</h2>
+                    <div class="charts-grid">
+                        <div class="chart-container-box glass-card">
+                            <span class="field-label">Dimension Score Breakdown</span>
+                            <canvas id="chart-skills-radar"></canvas>
+                        </div>
+                        <div class="chart-container-box glass-card">
+                            <span class="field-label">Tone & Communication Performance</span>
+                            <canvas id="chart-comm-bar"></canvas>
+                        </div>
+                        <div class="chart-container-box glass-card">
+                            <span class="field-label">Speech Confidence Graph (Rounds 1-6)</span>
+                            <canvas id="chart-confidence-line"></canvas>
+                        </div>
+                        <div class="chart-container-box glass-card">
+                            <span class="field-label">Historical Improvement Trend</span>
+                            <canvas id="chart-trend-line"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab 3: Personalized Learning Roadmap -->
+                <div id="cand-tab-roadmap" style="display: none;">
+                    <h2 style="font-size: 18px; margin-bottom: 0.5rem;">Your AI Career Roadmap</h2>
+                    <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 1.5rem;">Customized 4-week
+                        study roadmap addressing identified technical gaps and presentation style issues.</p>
+
+                    <div id="cand-roadmap-weeks" style="display: flex; flex-direction: column; gap: 14px;">
+                        <!-- Dynamic week cards -->
+                    </div>
+                </div>
+
+                <!-- Tab 4: History & Achievement Badges -->
+                <div id="cand-tab-history" style="display: none;">
+                    <h2 style="font-size: 18px; margin-bottom: 1rem;">Earned Badges & Credentials</h2>
+                    <div class="badge-flex" id="cand-badges-list">
+                        <!-- Dynamic badges icons -->
+                    </div>
+
+                    <h2 style="font-size: 18px; margin-top: 2.5rem; margin-bottom: 1rem;">Mock Session History</h2>
+                    <div class="glass-card" style="overflow: hidden;">
+                        <table class="ranking-table" style="margin-top: 0;">
+                            <thead>
+                                <tr>
+                                    <th>Session ID</th>
+                                    <th>Date</th>
+                                    <th>Role</th>
+                                    <th>Focus Language</th>
+                                    <th>Avg Score</th>
+                                    <th>Outcome</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cand-history-table-body">
+                                <!-- Populated history -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ── SCREEN: RECRUITER PORTAL ── -->
+    <div id="screen-recruiter" class="screen">
+        <div class="recruiter-grid">
+
+            <!-- Top header stats -->
+            <div class="recruiter-stats-row">
+                <div class="stat-card glass-card">
+                    <div class="stat-icon" style="background: var(--purple-light)"><i class="ti ti-users"
+                            style="color: var(--purple)"></i></div>
+                    <div>
+                        <div class="stat-val">4 Candidates</div>
+                        <div class="stat-lbl">Registered for Review</div>
+                    </div>
+                </div>
+                <div class="stat-card glass-card">
+                    <div class="stat-icon" style="background: var(--green-light)"><i class="ti ti-star"
+                            style="color: var(--green)"></i></div>
+                    <div>
+                        <div class="stat-val">Dharamsoth Jeshwanth</div>
+                        <div class="stat-lbl">Top Ranked Candidate</div>
+                    </div>
+                </div>
+                <div class="stat-card glass-card">
+                    <div class="stat-icon" style="background: var(--blue-light)"><i class="ti ti-activity"
+                            style="color: var(--blue)"></i></div>
+                    <div>
+                        <div class="stat-val">9.4/10 Max</div>
+                        <div class="stat-lbl">Highest Metric Score</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Left / Right layout for Recruiter tools -->
+            <div style="display: grid; grid-template-columns: 1fr 380px; gap: 24px;">
+
+                <!-- Left panel: Candidate comparison Table -->
+                <div class="ranking-table-box glass-card">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h2 style="font-size: 16px; font-weight:700;">Candidate Evaluation Rankings</h2>
+                        <input type="text" placeholder="Search profiles..." style="padding: 6px 12px; font-size:12px;"
+                            id="candidate-search" oninput="filterCandidateTable()">
+                    </div>
+
+                    <table class="ranking-table" id="rec-candidate-table">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Candidate Name</th>
+                                <th>Desired Role</th>
+                                <th>Tech Focus</th>
+                                <th>Speech score</th>
+                                <th>Avg Rating</th>
+                                <th>Decision</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rec-candidates-tbody">
+                            <!-- Render candidates rows -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Right panel: AI Recruiter notes & recordings player -->
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+
+                    <!-- Audio player -->
+                    <div class="recording-player-card glass-card">
+                        <span class="field-label" style="margin-bottom: 10px; display: block;"><i
+                                class="ti ti-player-play"></i> Interview Voice Recording Simulation</span>
+                        <div class="player-row">
+                            <button class="play-btn" onclick="toggleSimulatedPlayback()" id="btn-playback-toggle">
+                                <i class="ti ti-player-play-filled" id="playback-icon"></i>
+                            </button>
+                            <div style="flex: 1;">
+                                <div
+                                    style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px;">
+                                    <span id="playing-track-title">Introduction Round (Dharamsoth)</span>
+                                    <span id="playing-track-time">0:00 / 0:14</span>
+                                </div>
+                                <div class="progress-track-simulated" onclick="seekSimulatedPlayback(event)">
+                                    <div class="progress-fill-simulated" id="playback-progress-fill"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 6px;">
+                            <select id="recording-select" style="width: 100%; font-size: 12px;"
+                                onchange="loadSimulatedTrack()">
+                                <option value="intro">Round 1: Self Intro (Dharamsoth)</option>
+                                <option value="tech">Round 3: Java Challenge (Dharamsoth)</option>
+                                <option value="problem">Round 4: API Design (Dharamsoth)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- AI Recruiter Notes -->
+                    <div class="glass-card" style="padding: 1.5rem;">
+                        <span class="field-label" style="margin-bottom: 8px; display: block;"><i
+                                class="ti ti-notes"></i> AI Recruiter Analysis Notes</span>
+                        <textarea id="recruiter-notes"
+                            style="width:100%; height: 120px; font-size: 12px; line-height: 1.5; resize: none; margin-bottom: 10px;"
+                            placeholder="AI summary generated upon interview completion..."></textarea>
+                        <button class="btn-primary" style="width: 100%; font-size: 12px;"
+                            onclick="saveRecruiterNotes()">Save Analysis Notes</button>
+                    </div>
+
+                    <!-- Resume parsing & metrics -->
+                    <div class="glass-card" style="padding: 1.5rem; font-size: 13px;">
+                        <span class="field-label" style="margin-bottom: 10px; display: block;"><i
+                                class="ti ti-file-analytics"></i> Profile Parsed Analytics</span>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                            <span style="color:var(--text-secondary);">Resume Quality:</span>
+                            <strong id="rec-resume-score">95% (Excellent)</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                            <span style="color:var(--text-secondary);">Institution Tier:</span>
+                            <strong>Tier 2 (CMREC)</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                            <span style="color:var(--text-secondary);">Stack Alignment:</span>
+                            <strong>Strong (Data Science)</strong>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ── SCREEN: ABOUT DEVELOPER ── -->
+    <div id="screen-developer" class="screen">
+        <div class="developer-card-container glass-card">
+            <div class="dev-profile-img">
+                <i class="ti ti-code"></i>
+            </div>
+
+            <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 4px;">Dharamsoth Jeshwanth</h2>
+            <p style="font-size: 14px; color: var(--purple); font-weight: 600;">Full-Stack Developer & Web Developer</p>
+
+            <p
+                style="font-size: 14px; color: var(--text-secondary); max-width: 500px; margin: 12px auto 0; line-height: 1.7;">
+                Undergraduate student specialising in Data Science. Passionate about building enterprise AI solutions,
+                natural voice processing agents, and beautiful SaaS dashboards.
+            </p>
+
+            <div class="dev-details-grid">
+                <div class="dev-detail-item glass-card">
+                    <span class="dev-label">Designed & Developed By</span>
+                    <span class="dev-val">Dharamsoth Jeshwanth</span>
+                </div>
+                <div class="dev-detail-item glass-card">
+                    <span class="dev-label">GitHub Portal</span>
+                    <span class="dev-val"><a href="https://github.com/JESHWANTH21" target="_blank"
+                            style="color:inherit; text-decoration:none;">github.com/JESHWANTH21</a></span>
+                </div>
+                <div class="dev-detail-item glass-card">
+                    <span class="dev-label">Email Address</span>
+                    <span class="dev-val"><a href="mailto:jashuroyal84@gmail.com"
+                            style="color:inherit; text-decoration:none;">jashuroyal84@gmail.com</a></span>
+                </div>
+                <div class="dev-detail-item glass-card">
+                    <span class="dev-label">Education Facility</span>
+                    <span class="dev-val">CMR Engineering College (CMREC)</span>
+                </div>
+                <div class="dev-detail-item glass-card">
+                    <span class="dev-label">Degree Target</span>
+                    <span class="dev-val">B.Tech (III Year)</span>
+                </div>
+                <div class="dev-detail-item glass-card">
+                    <span class="dev-label">Specialist Branch</span>
+                    <span class="dev-val">Department of Data Science</span>
+                </div>
+            </div>
+
+            <!-- Future Expansions list -->
+            <div style="margin-top: 3rem; text-align: left;">
+                <h3
+                    style="font-size: 16px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                    <i class="ti ti-rocket" style="color: var(--purple);"></i> Future Expansion Roadmaps
+                </h3>
+                <div
+                    style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 12px; color: var(--text-secondary);">
+                    <div style="display:flex; align-items:center; gap:6px;"><i class="ti ti-device-laptop"
+                            style="color: var(--purple);"></i> AI Video & Facial Expression Analysis</div>
+                    <div style="display:flex; align-items:center; gap:6px;"><i class="ti ti-users"
+                            style="color: var(--purple);"></i> Multi-AI Recruiter Panels</div>
+                    <div style="display:flex; align-items:center; gap:6px;"><i class="ti ti-template"
+                            style="color: var(--purple);"></i> Company-Specific Custom Templates</div>
+                    <div style="display:flex; align-items:center; gap:6px;"><i class="ti ti-brain"
+                            style="color: var(--purple);"></i> AI Career & Resume Builder Tool</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── API SETTINGS MODAL ── -->
+    <div class="settings-modal" id="settings-modal">
+        <div class="modal-box glass-card">
+            <h3 style="font-size: 18px; font-weight:700; margin-bottom: 8px;"><i class="ti ti-settings"></i> API Configuration & Premium Voice</h3>
+            <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 1rem;">Configure your AI recruiter with premium features and custom API keys.</p>
+
+            <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 1.5rem;">
+                <div style="border-bottom: 1px solid var(--border); padding-bottom: 12px;">
+                    <h4 style="font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--purple);"><i class="ti ti-microphone"></i> Premium Voice (ChatGPT-Style)</h4>
+                    <div>
+                        <label class="field-label">ElevenLabs API Key <span style="color: var(--green); font-size: 11px;">(Optional - Premium Voice)</span></label>
+                        <input type="password" id="settings-elevenlabs-key" placeholder="sk_..." style="width: 100%; margin-bottom: 6px;">
+                        <p style="font-size: 11px; color: var(--text-secondary);">Get your free API key at <a href="https://elevenlabs.io" target="_blank" style="color: var(--blue);">elevenlabs.io</a></p>
+                    </div>
+                </div>
+                <div style="border-bottom: 1px solid var(--border); padding-bottom: 12px;">
+                    <h4 style="font-size: 13px; font-weight: 600; margin-bottom: 8px; color: var(--purple);"><i class="ti ti-api"></i> Claude API (Optional)</h4>
+                    <div>
+                        <label class="field-label">Anthropic API Key</label>
+                        <input type="password" id="settings-api-key" placeholder="sk-ant-..." style="width: 100%; margin-bottom: 6px;">
+                    </div>
+                    <div>
+                        <label class="field-label">Custom Proxy URL</label>
+                        <input type="text" id="settings-proxy-url" placeholder="https://your-api-endpoint.com" style="width: 100%;">
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; justify-content: flex-end;">
+                <button onclick="closeSettings()">Cancel</button>
+                <button class="btn-primary" onclick="saveSettings()">Save Configuration</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── GLOBAL FOOTER ── -->
+    <footer class="footer">
+        <div style="display: inline-flex; align-items: center; gap: 8px;">
+            <div class="logo-box" style="width:30px; height:30px;"><i class="ti ti-robot" style="font-size:16px;"></i>
+            </div>
+            <span style="font-weight: 700; font-size: 15px; letter-spacing:-0.02em;">Get Touch vth Developer</span>
+        </div>
+        <div class="footer-divider"></div>
+        <p style="font-size: 12px; color: var(--text-secondary);">Designed & Developed by <strong
+                style="color: var(--text-primary);">Dharamsoth Jeshwanth</strong></p>
+        <p style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">CMREC · III B.Tech · Department of
+            Data Science</p>
+
+        <div class="footer-links">
+            <a href="https://github.com/JESHWANTH21" target="_blank"><i class="ti ti-brand-github"></i> github</a>
+            <a href="mailto:jashuroyal84@gmail.com"><i class="ti ti-mail"></i> G-Mail</a>
+            <a href="https://www.linkedin.com/in/dharamsoth-jeshwanth-399a913b3" target="_blank"><i
+                    class="ti ti-brand-linkedin"></i> LinkedIn</a>
+        </div>
+    </footer>
+    <script src="script.js"></script>
+</body>
+
+</html>
